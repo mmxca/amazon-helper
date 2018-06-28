@@ -1,7 +1,13 @@
 {
     "name": "mmxca/amazon-helper",
-    "description": "Simplifies access to the Amazon API",
+    "type": "library",
+    "description": "Simplifies access to the Amazon Product Advertising API",
     "require": {
         "php": "^7.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "AmazonHelper\\": "src/"
+        }
     }
 }
