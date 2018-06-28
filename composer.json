@@ -1,5 +1,5 @@
 {
-    "name": "mmxca/amazon-helper",
+    "name": "mmxca/amazon-paapi-helper",
     "type": "library",
     "description": "Simplifies access to the Amazon Product Advertising API",
     "require": {
