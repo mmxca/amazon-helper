@@ -1,0 +1,7 @@
+{
+    "name": "mmxca/amazon-helper",
+    "description": "Simplifies access to the Amazon API",
+    "require": {
+        "php": "^7.1"
+    }
+}
