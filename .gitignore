@@ -3,3 +3,5 @@ wordpress/
 cache/
 .idea/
 composer.lock
+.php_cs.cache
+
