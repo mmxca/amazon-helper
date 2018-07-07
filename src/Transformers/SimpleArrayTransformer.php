@@ -55,6 +55,7 @@ class SimpleArrayTransformer implements IDataTransformer
             $item['features'] = $responseItem->ItemAttributes->Feature;
 
             $item['details'] = (string) $responseItem->EditorialReviews->EditorialReview->Content.' '.implode(' ', $responseItem->ItemAttributes->Feature);
+            $item['details'] = strip_tags(trim($item['details']));
 
             $item['hashtags'][] = ($responseItem->ItemAttributes->Binding) ? (string) $responseItem->ItemAttributes->Binding : null;
             $item['hashtags'][] = ($responseItem->ItemAttributes->Manufacturer) ? (string) $responseItem->ItemAttributes->Manufacturer : null;
