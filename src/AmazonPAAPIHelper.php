@@ -514,7 +514,7 @@ class AmazonPAAPIHelper
         $searchIndex = empty($searchIndex) ? 'All' : $searchIndex;
 
         if (null == $sortBy) {
-            $sortBy = VALID_SEARCH_INDEXES[$searchIndex]['default_sort'];
+            $sortBy = AmazonPAAPIHelper::VALID_SEARCH_INDEXES[$searchIndex]['default_sort'];
         }
 
         $params = array(
