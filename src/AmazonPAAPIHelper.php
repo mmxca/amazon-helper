@@ -34,127 +34,127 @@ class AmazonPAAPIHelper
 
     const VALID_SEARCH_INDEXES = [
         'All' => [
-            "department" => "All Departments",
-            "root_browse_node" => 0,
-            "sort_values" => [],
-            "default_sort" => null,
-            "parameters" => [
-                "Availability",
-                "ItemPage",
-                "Keywords",
-                "MaximumPrice",
-                "MerchantId",
-                "MinPercentageOff",
-                "MinimumPrice"
-            ]
+            'department' => 'All Departments',
+            'root_browse_node' => 0,
+            'sort_values' => [],
+            'default_sort' => null,
+            'parameters' => [
+                'Availability',
+                'ItemPage',
+                'Keywords',
+                'MaximumPrice',
+                'MerchantId',
+                'MinPercentageOff',
+                'MinimumPrice',
+            ],
         ],
         'Appliances' => [
-            "department" => "Appliances",
-            "root_browse_node" => 2619526011,
-            "sort_values" => [
-                "salesrank",
-                "pmrank",
-                "price",
-                "-price",
-                "relevancerank",
-                "reviewrank",
-                "reviewrank_authority"                  
+            'department' => 'Appliances',
+            'root_browse_node' => 2619526011,
+            'sort_values' => [
+                'salesrank',
+                'pmrank',
+                'price',
+                '-price',
+                'relevancerank',
+                'reviewrank',
+                'reviewrank_authority',
             ],
-            "default_sort" => "salesrank",
-            "parameters" => [
-                "Availability"
-                "Brand"
-                "ItemPage"
-                "Keywords"
-                "Manufacturer"
-                "MaximumPrice"
-                "MerchantId"
-                "MinPercentageOff"
-                "MinimumPrice"
-                "Sort"
-                "Title"
-            ]
+            'default_sort' => 'salesrank',
+            'parameters' => [
+                'Availability',
+                'Brand',
+                'ItemPage',
+                'Keywords',
+                'Manufacturer',
+                'MaximumPrice',
+                'MerchantId',
+                'MinPercentageOff',
+                'MinimumPrice',
+                'Sort',
+                'Title',
+            ],
         ],
         'ArtsAndCrafts' => [
-            "department" => "Arts, Crafts & Sewing",
-            "root_browse_node" => 2617942011,
-            "sort_values" => [
-                "salesrank",
-                "pmrank",
-                "reviewrank",
-                "reviewrank_authority",
-                "relevancerank",
-                "price",
-                "-price"                
+            'department' => 'Arts, Crafts & Sewing',
+            'root_browse_node' => 2617942011,
+            'sort_values' => [
+                'salesrank',
+                'pmrank',
+                'reviewrank',
+                'reviewrank_authority',
+                'relevancerank',
+                'price',
+                '-price',
             ],
-            "default_sort" => "salesrank",
-            "parameters" => [
-                "Availability"
-                "Brand"
-                "ItemPage"
-                "Keywords"
-                "Manufacturer"
-                "MaximumPrice"
-                "MerchantId"
-                "MinPercentageOff"
-                "MinimumPrice"
-                "Sort"
-                "Title"
-            ]
+            'default_sort' => 'salesrank',
+            'parameters' => [
+                'Availability',
+                'Brand',
+                'ItemPage',
+                'Keywords',
+                'Manufacturer',
+                'MaximumPrice',
+                'MerchantId',
+                'MinPercentageOff',
+                'MinimumPrice',
+                'Sort',
+                'Title',
+            ],
         ],
         'Automotive' => [
-            "department" => "Automotive",
-            "root_browse_node" => 15690151,
-            "sort_values" => [
-                "salesrank",
-                "titlerank",
-                "-titlerank",
-                "relevancerank",
-                "price",
-                "-price"               
+            'department' => 'Automotive',
+            'root_browse_node' => 15690151,
+            'sort_values' => [
+                'salesrank',
+                'titlerank',
+                '-titlerank',
+                'relevancerank',
+                'price',
+                '-price',
             ],
-            "default_sort" => "salesrank",
-            "parameters" => [
-                "Availability"
-                "Brand"
-                "ItemPage"
-                "Keywords"
-                "Manufacturer"
-                "MaximumPrice"
-                "MerchantId"
-                "MinPercentageOff"
-                "MinimumPrice"
-                "Sort"
-                "Title"
-            ]
+            'default_sort' => 'salesrank',
+            'parameters' => [
+                'Availability',
+                'Brand',
+                'ItemPage',
+                'Keywords',
+                'Manufacturer',
+                'MaximumPrice',
+                'MerchantId',
+                'MinPercentageOff',
+                'MinimumPrice',
+                'Sort',
+                'Title',
+            ],
         ],
         'Baby' => [
-            "department" => "Baby",
-            "root_browse_node" => 165797011,
-            "sort_values" => [
-                "salesrank",
-                "psrank",
-                "titlerank",
-                "-price",
-                "price"
+            'department' => 'Baby',
+            'root_browse_node' => 165797011,
+            'sort_values' => [
+                'salesrank',
+                'psrank',
+                'titlerank',
+                '-price',
+                'price',
             ],
-            "default_sort" => "salesrank",
-            "parameters" => [
-                "Author"
-                "Availability"
-                "Brand"
-                "ItemPage"
-                "Keywords"
-                "Manufacturer"
-                "MaximumPrice"
-                "MerchantId"
-                "MinPercentageOff"
-                "MinimumPrice"
-                "Sort"
-                "Title"
-            ]
+            'default_sort' => 'salesrank',
+            'parameters' => [
+                'Author',
+                'Availability',
+                'Brand',
+                'ItemPage',
+                'Keywords',
+                'Manufacturer',
+                'MaximumPrice',
+                'MerchantId',
+                'MinPercentageOff',
+                'MinimumPrice',
+                'Sort',
+                'Title',
+            ],
         ],
-        //https://docs.aws.amazon.com/AWSECommerceService/latest/DG/LocaleUS.html    
+        //https://docs.aws.amazon.com/AWSECommerceService/latest/DG/LocaleUS.html
     ];
 
     private $apiKey;
