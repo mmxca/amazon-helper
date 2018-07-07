@@ -202,7 +202,7 @@ class AmazonPAAPIHelper
     {
         $params = array(
             'Operation' => 'ItemSearch',
-            'ResponseGroup' => 'ItemAttributes,Offers,Images',
+            'ResponseGroup' => 'ItemAttributes,Offers,Images,EditorialReview',
             'Condition' => $condition,
             'Availability' => $availability,
             'SearchIndex' => empty($searchIndex) ? 'All' : $searchIndex,

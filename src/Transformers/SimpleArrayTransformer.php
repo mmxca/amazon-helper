@@ -24,8 +24,6 @@ class SimpleArrayTransformer implements IDataTransformer
 
         // Get each item
         foreach ($xmlData->Items->Item as $responseItem) {
-            // print_r($responseItem);
-            // exit;
             $item = array();
             $item['asin'] = (string) $responseItem->ASIN;
             $item['url'] = (string) $responseItem->DetailPageURL;
@@ -53,8 +51,11 @@ class SimpleArrayTransformer implements IDataTransformer
             $item['mediumImage'] = (string) $responseItem->MediumImage->URL;
             $item['smallImage'] = (string) $responseItem->SmallImage->URL;
 
-            $item['tags'][] = ($responseItem->ItemAttributes->Binding) ? (string) $responseItem->ItemAttributes->Binding : null;
-            $item['tags'][] = ($responseItem->ItemAttributes->Manufacturer) ? (string) $responseItem->ItemAttributes->Manufacturer : null;
+            $item['description'] = (string) $responseItem->EditorialReviews->EditorialReview->Content;
+            $item['features'] = $responseItem->ItemAttributes->Feature;
+
+            $item['hashtags'][] = ($responseItem->ItemAttributes->Binding) ? (string) $responseItem->ItemAttributes->Binding : null;
+            $item['hashtags'][] = ($responseItem->ItemAttributes->Manufacturer) ? (string) $responseItem->ItemAttributes->Manufacturer : null;
             // $item['tags'][] = ($responseItem->ItemAttributes->Binding) ? (string)$responseItem->ItemAttributes->Binding : null;
             // $item['tags'][] = ($responseItem->ItemAttributes->Binding) ? (string)$responseItem->ItemAttributes->Binding : null;
 
