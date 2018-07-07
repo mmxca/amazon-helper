@@ -165,6 +165,7 @@ class AmazonPAAPIHelper
 
     private $mErrors = [];
     private $urlBuilder = null;
+    private $params = null;
 
     /**
      * Create an API Object by specifying the AWS API Key, Secret Key, and Site.
@@ -209,7 +210,7 @@ class AmazonPAAPIHelper
         );
 
         if (null != $keywords) {
-            $params['Keywords'] = $page;
+            $params['Keywords'] = $keywords;
         }
 
         if (null != $page) {
@@ -260,6 +261,11 @@ class AmazonPAAPIHelper
         return $this->mErrors;
     }
 
+    public function GetLastParams()
+    {
+        return $this->params;
+    }
+
     private function AddError($error)
     {
         array_push($this->mErrors, $error);
@@ -267,6 +273,7 @@ class AmazonPAAPIHelper
 
     private function MakeAndParseRequest($params)
     {
+        $this->params = $params;
         $signedUrl = $this->urlBuilder->generate($params);
 
         try {
