@@ -53,7 +53,10 @@ class SimpleArrayTransformer implements IDataTransformer
             $item['mediumImage'] = (string) $responseItem->MediumImage->URL;
             $item['smallImage'] = (string) $responseItem->SmallImage->URL;
 
-            $item['description'] = (string) $responseItem->EditorialReviews->EditorialReview->Content;
+            if ($responseItem->EditorialReviews->EditorialReview->Content) {
+                $item['description'] = (string) $responseItem->EditorialReviews->EditorialReview->Content;
+            }
+
             $item['features'] = (array) $responseItem->ItemAttributes->Feature;
 
             $item['details'] = $item['description'];
