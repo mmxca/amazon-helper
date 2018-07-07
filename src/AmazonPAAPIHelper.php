@@ -33,45 +33,128 @@ class AmazonPAAPIHelper
     const AMAZON_SITE_UNITED_STATES = 'us';
 
     const VALID_SEARCH_INDEXES = [
-        'All',
-        'Apparel',
-        'Appliances',
-        'Automotive',
-        'Baby',
-        'Beauty',
-        'Blended',
-        'Books',
-        'Classical',
-        'DVD',
-        'Electronics',
-        'Grocery',
-        'HealthPersonalCare',
-        'HomeGarden',
-        'HomeImprovement',
-        'Jewelry',
-        'KindleStore',
-        'Kitchen',
-        'Lighting',
-        'Marketplace',
-        'MP3Downloads',
-        'Music',
-        'MusicTracks',
-        'MusicalInstruments',
-        'OfficeProducts',
-        'OutdoorLiving',
-        'Outlet',
-        'PetSupplies',
-        'PCHardware',
-        'Shoes',
-        'Software',
-        'SoftwareVideoGames',
-        'SportingGoods',
-        'Tools',
-        'Toys',
-        'VHS',
-        'Video',
-        'VideoGames',
-        'Watches',
+        'All' => [
+            "department" => "All Departments",
+            "root_browse_node" => 0,
+            "sort_values" => [],
+            "default_sort" => null,
+            "parameters" => [
+                "Availability",
+                "ItemPage",
+                "Keywords",
+                "MaximumPrice",
+                "MerchantId",
+                "MinPercentageOff",
+                "MinimumPrice"
+            ]
+        ],
+        'Appliances' => [
+            "department" => "Appliances",
+            "root_browse_node" => 2619526011,
+            "sort_values" => [
+                "salesrank",
+                "pmrank",
+                "price",
+                "-price",
+                "relevancerank",
+                "reviewrank",
+                "reviewrank_authority"                  
+            ],
+            "default_sort" => "salesrank",
+            "parameters" => [
+                "Availability"
+                "Brand"
+                "ItemPage"
+                "Keywords"
+                "Manufacturer"
+                "MaximumPrice"
+                "MerchantId"
+                "MinPercentageOff"
+                "MinimumPrice"
+                "Sort"
+                "Title"
+            ]
+        ],
+        'ArtsAndCrafts' => [
+            "department" => "Arts, Crafts & Sewing",
+            "root_browse_node" => 2617942011,
+            "sort_values" => [
+                "salesrank",
+                "pmrank",
+                "reviewrank",
+                "reviewrank_authority",
+                "relevancerank",
+                "price",
+                "-price"                
+            ],
+            "default_sort" => "salesrank",
+            "parameters" => [
+                "Availability"
+                "Brand"
+                "ItemPage"
+                "Keywords"
+                "Manufacturer"
+                "MaximumPrice"
+                "MerchantId"
+                "MinPercentageOff"
+                "MinimumPrice"
+                "Sort"
+                "Title"
+            ]
+        ],
+        'Automotive' => [
+            "department" => "Automotive",
+            "root_browse_node" => 15690151,
+            "sort_values" => [
+                "salesrank",
+                "titlerank",
+                "-titlerank",
+                "relevancerank",
+                "price",
+                "-price"               
+            ],
+            "default_sort" => "salesrank",
+            "parameters" => [
+                "Availability"
+                "Brand"
+                "ItemPage"
+                "Keywords"
+                "Manufacturer"
+                "MaximumPrice"
+                "MerchantId"
+                "MinPercentageOff"
+                "MinimumPrice"
+                "Sort"
+                "Title"
+            ]
+        ],
+        'Baby' => [
+            "department" => "Baby",
+            "root_browse_node" => 165797011,
+            "sort_values" => [
+                "salesrank",
+                "psrank",
+                "titlerank",
+                "-price",
+                "price"
+            ],
+            "default_sort" => "salesrank",
+            "parameters" => [
+                "Author"
+                "Availability"
+                "Brand"
+                "ItemPage"
+                "Keywords"
+                "Manufacturer"
+                "MaximumPrice"
+                "MerchantId"
+                "MinPercentageOff"
+                "MinimumPrice"
+                "Sort"
+                "Title"
+            ]
+        ],
+        //https://docs.aws.amazon.com/AWSECommerceService/latest/DG/LocaleUS.html    
     ];
 
     private $apiKey;
@@ -105,26 +188,29 @@ class AmazonPAAPIHelper
     /**
      * Search for items.
      *
-     * @param	keywords			Keywords which we're requesting
      * @param	searchIndex			Name of search index (category) requested. NULL if searching all.
      * @param   page                If set, will return the page specified Valid values: 1 to 10 (1 to 5 when search index is All)
+     * @param	keywords			Keywords which we're requesting
      * @param	sortBy				Category to sort by, Defaults to salesrank, and only used if searchIndex is not 'All'
      * #param   availability        Defaults to only return the proudcts that are available
      * @param	condition			Condition of item. Valid conditions : Used, Collectible, Refurbished, All
      *
      * @return mixed simpleXML object, array of data or false if failure
      */
-    public function ItemSearch($keywords, $searchIndex = null, $page = null, $sortBy = 'salesrank', $availability = 'Available', $condition = 'New')
+    public function ItemSearch($searchIndex = null, $page = null, $keywords = null, $sortBy = 'salesrank', $availability = 'Available', $condition = 'New')
     {
         $params = array(
             'Operation' => 'ItemSearch',
             'ResponseGroup' => 'ItemAttributes,Offers,Images',
-            'Keywords' => $keywords,
             'Condition' => $condition,
             'Availability' => $availability,
             'SearchIndex' => empty($searchIndex) ? 'All' : $searchIndex,
             'Sort' => $sortBy && ('All' != $searchIndex) ? $sortBy : null,
         );
+
+        if (null != $keywords) {
+            $params['Keywords'] = $page;
+        }
 
         if (null != $page) {
             $page = ($page < 1) ? 1 : $page;
