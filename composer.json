@@ -3,7 +3,8 @@
     "type": "library",
     "description": "Simplifies access to the Amazon Product Advertising API",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "marcl/amazonproductapi": "^3.0"
     },
     "autoload": {
         "psr-4": {
