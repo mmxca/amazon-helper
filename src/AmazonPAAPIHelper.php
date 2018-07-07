@@ -107,14 +107,14 @@ class AmazonPAAPIHelper
      *
      * @param	keywords			Keywords which we're requesting
      * @param	searchIndex			Name of search index (category) requested. NULL if searching all.
-     * @param	sortBy				Category to sort by, only used if searchIndex is not 'All'
      * @param   page                If set, will return the page specified Valid values: 1 to 10 (1 to 5 when search index is All)
+     * @param	sortBy				Category to sort by, Defaults to salesrank, and only used if searchIndex is not 'All'
      * #param   availability        Defaults to only return the proudcts that are available
      * @param	condition			Condition of item. Valid conditions : Used, Collectible, Refurbished, All
      *
      * @return mixed simpleXML object, array of data or false if failure
      */
-    public function ItemSearch($keywords, $searchIndex = null, $sortBy = null, $page = null, $availability = 'Available', $condition = 'New')
+    public function ItemSearch($keywords, $searchIndex = null, $page = null, $sortBy = 'salesrank', $availability = 'Available', $condition = 'New')
     {
         $params = array(
             'Operation' => 'ItemSearch',
