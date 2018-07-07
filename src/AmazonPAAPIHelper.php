@@ -509,14 +509,20 @@ class AmazonPAAPIHelper
      *
      * @return mixed simpleXML object, array of data or false if failure
      */
-    public function ItemSearch($searchIndex = null, $page = null, $keywords = null, $sortBy = 'salesrank', $availability = 'Available', $condition = 'New')
+    public function ItemSearch($searchIndex = null, $page = null, $keywords = null, $sortBy = null, $availability = 'Available', $condition = 'New')
     {
+        $searchIndex = empty($searchIndex) ? 'All' : $searchIndex;
+
+        if (null == $sortBy) {
+            $sortBy = VALID_SEARCH_INDEXES[$searchIndex]['default_sort'];
+        }
+
         $params = array(
             'Operation' => 'ItemSearch',
             'ResponseGroup' => 'ItemAttributes,Offers,Images,EditorialReview',
             'Condition' => $condition,
             'Availability' => $availability,
-            'SearchIndex' => empty($searchIndex) ? 'All' : $searchIndex,
+            'SearchIndex' => $searchIndex,
             'Sort' => $sortBy && ('All' != $searchIndex) ? $sortBy : null,
         );
 
