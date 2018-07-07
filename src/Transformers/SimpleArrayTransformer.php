@@ -39,7 +39,7 @@ class SimpleArrayTransformer implements IDataTransformer
             }
 
             if ($responseItem->Offers->Offer->OfferListing) {
-                $item['available'] = ('now' == $responseItem->Offers->Offer->OfferListing->AvailabilityAttributes->AvailabilityType) ? true : false;
+                $item['available'] = ('now' == (string) $responseItem->Offers->Offer->OfferListing->AvailabilityAttributes->AvailabilityType) ? true : false;
                 $item['prime'] = (bool) $responseItem->Offers->Offer->OfferListing->IsEligibleForPrime;
             } else {
                 $item['available'] = false;
@@ -54,10 +54,11 @@ class SimpleArrayTransformer implements IDataTransformer
             $item['smallImage'] = (string) $responseItem->SmallImage->URL;
 
             $item['description'] = (string) $responseItem->EditorialReviews->EditorialReview->Content;
-            $item['features'] = $responseItem->ItemAttributes->Feature;
+            $item['features'] = (array) $responseItem->ItemAttributes->Feature;
 
-            $item['details'] = (string) $responseItem->EditorialReviews->EditorialReview->Content.' '.implode(' ', $responseItem->ItemAttributes->Feature);
-            $item['details'] = strip_tags(trim($item['details']));
+            $item['details'] = $item['description'];
+            $item['details'] .= implode(' ', (array) $responseItem->ItemAttributes->Feature);
+            $item['details'] = HelperFunctions::sentence_case(preg_replace('/[^A-Za-z0-9\.\,\-\" ]/', '', strip_tags(trim($item['details']))));
 
             $item['hashtags'][] = ($responseItem->ItemAttributes->Binding) ? (string) $responseItem->ItemAttributes->Binding : null;
             $item['hashtags'][] = ($responseItem->ItemAttributes->Manufacturer) ? (string) $responseItem->ItemAttributes->Manufacturer : null;
