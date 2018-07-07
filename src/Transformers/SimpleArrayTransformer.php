@@ -55,11 +55,13 @@ class SimpleArrayTransformer implements IDataTransformer
 
             if ($responseItem->EditorialReviews) {
                 $item['description'] = (string) $responseItem->EditorialReviews->EditorialReview->Content;
-                $item['details'] = (string) $responseItem->EditorialReviews->EditorialReview->Content;
+            } else {
+                $item['description'] = '';
             }
 
             $item['features'] = (array) $responseItem->ItemAttributes->Feature;
 
+            $item['details'] = $item['description'];
             $item['details'] .= implode(' ', (array) $responseItem->ItemAttributes->Feature);
             $item['details'] = HelperFunctions::sentence_case(preg_replace('/[^A-Za-z0-9\.\,\-\" ]/', '', strip_tags(trim($item['details']))));
 
