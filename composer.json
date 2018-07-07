@@ -4,7 +4,8 @@
     "description": "Simplifies access to the Amazon Product Advertising API",
     "require": {
         "php": "^7.1",
-        "marcl/amazonproductapi": "^3.0"
+        "marcl/amazonproductapi": "^3.0",
+        "mmxca/helper-functions": "dev-master"
     },
     "autoload": {
         "psr-4": {

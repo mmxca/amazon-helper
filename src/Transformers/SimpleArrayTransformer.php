@@ -2,6 +2,8 @@
 
 namespace AmazonHelper\Transformers;
 
+use HelperFunctions\HelperFunctions;
+
 class SimpleArrayTransformer implements IDataTransformer
 {
     public function execute($xmlData)
@@ -27,13 +29,13 @@ class SimpleArrayTransformer implements IDataTransformer
             $item = array();
             $item['asin'] = (string) $responseItem->ASIN;
             $item['url'] = (string) $responseItem->DetailPageURL;
-            $item['list_price'] = ((float) $responseItem->ItemAttributes->ListPrice->Amount) / 100.0;
+            $item['list_price'] = HelperFunctions::format_money('%.2n', ((float) $responseItem->ItemAttributes->ListPrice->Amount) / 100.0);
             $item['title'] = (string) $responseItem->ItemAttributes->Title;
 
             if ($responseItem->OfferSummary) {
-                $item['lowestPrice'] = ((float) $responseItem->OfferSummary->LowestNewPrice->Amount) / 100.0;
+                $item['lowestPrice'] = HelperFunctions::format_money('%.2n', ((float) $responseItem->OfferSummary->LowestNewPrice->Amount) / 100.0);
             } else {
-                $item['lowestPrice'] = 0.0;
+                $item['lowestPrice'] = HelperFunctions::format_money('%.2n', 0.0);
             }
 
             if ($responseItem->Offers->Offer->OfferListing) {
