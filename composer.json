@@ -5,7 +5,7 @@
     "require": {
         "php": "^7.1",
         "marcl/amazonproductapi": "^3.0",
-        "mmxca/helper-functions": "dev-master"
+        "mmxca/helper-functions": "*"
     },
     "autoload": {
         "psr-4": {

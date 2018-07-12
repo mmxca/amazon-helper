@@ -5,6 +5,7 @@ namespace AmazonHelper;
 use MarcL\AmazonUrlBuilder;
 use MarcL\CurlHttpRequest;
 use AmazonHelper\Transformers\DataTransformerFactory;
+use HelperFunctions\Caching\SimplePHPCache;
 
 /**
  * AmazonHelper\AmazonPAAPIHelper.
@@ -478,16 +479,22 @@ class AmazonPAAPIHelper
     private $urlBuilder = null;
     private $params = null;
 
+    private $cache;
+    private $cache_expiration = 3600;
+
     /**
      * Create an API Object by specifying the AWS API Key, Secret Key, and Site.
      *
-     * @param string $apiKey     the PAAPI Key provided via the Associate website
-     * @param string $secretKey  the PAAPI Secret Key provided via the Associate website
-     * @param string $trackingId (optional) The web services URL you are trying to access
+     * @param string $apiKey      the PAAPI Key provided via the Associate website
+     * @param string $secretKey   the PAAPI Secret Key provided via the Associate website
+     * @param string $region      The web services URL you are trying to access
+     * @param string $cacheConfig An array specifying the cache name, path, and extension
+     * @param string $expire      (optional) when to expire caches (seconds) - null to disable
+     * @param string $trackingId  (optional) affiliate tracking code to use
      *
      * @return AmazonHelper
      */
-    public function __construct($apiKey, $secretKey, $region, $trackingId = 'mmxca06-20')
+    public function __construct($apiKey, $secretKey, $region, $cacheConfig, $expire = 3600, $trackingId = 'mmxca06-20')
     {
         $this->apiKey = $apiKey;
         $this->secretKey = $secretKey;
@@ -495,6 +502,12 @@ class AmazonPAAPIHelper
 
         $this->urlBuilder = new AmazonUrlBuilder($apiKey, $secretKey, $trackingId, $region);
         $this->dataTransformer = DataTransformerFactory::create('simple');
+
+        if (null != $expire) {
+            $this->cache = new SimplePHPCache($cacheConfig);
+            $this->cache_expiration = $expire;
+            $this->cache->eraseExpired();
+        }
     }
 
     /**
@@ -564,7 +577,7 @@ class AmazonPAAPIHelper
 
         $params = array(
             'Operation' => 'ItemLookup',
-            'ResponseGroup' => 'ItemAttributes,Offers,Reviews,Images,EditorialReview',
+            'ResponseGroup' => 'Large,RelatedItems,PromotionSummary,SalesRank,Similarities,Offers',
             'ReviewSort' => '-OverallRating',
             'ItemId' => $asinList,
             'MerchantId' => (true == $onlyFromAmazon) ? 'Amazon' : 'All',
@@ -590,6 +603,12 @@ class AmazonPAAPIHelper
 
     private function MakeAndParseRequest($params)
     {
+        if ($this->cache_expiration > 0) {
+            if ($this->cache->isCached(__FUNCTION__.'-'.base64_encode(serialize($params)))) {
+                return $this->cache->retrieve(__FUNCTION__.'-'.base64_encode(serialize($params)));
+            }
+        }
+
         $this->params = $params;
         $signedUrl = $this->urlBuilder->generate($params);
 
@@ -603,7 +622,13 @@ class AmazonPAAPIHelper
                 return false;
             }
 
-            return $this->dataTransformer->execute($parsedXml);
+            $returnVal = $this->dataTransformer->execute($parsedXml);
+
+            if ($this->cache_expiration > 0) {
+                $this->cache->store(__FUNCTION__.'-'.base64_encode(serialize($params)), $returnVal, $this->cache_expiration);
+            }
+
+            return $returnVal;
         } catch (\Exception $error) {
             $this->AddError("Error downloading data : $signedUrl : ".$error->getMessage());
 
